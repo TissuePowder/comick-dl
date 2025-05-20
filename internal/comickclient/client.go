@@ -25,5 +25,6 @@ func New(opts ...func(*http.Client)) *Client {
 
 
 func (c *Client) Download(ctx context.Context, id, path string) error {
+	c.HTTP.Get(id)
 	return nil
 }
