@@ -55,6 +55,7 @@ func main() {
 		cc.WithHeaders(header),
 		cc.WithLogger(logger),
 		cc.WithRateLimits(limits),
+		cc.WithRetry(5*time.Second, 10),
 	)
 
 	client.Download(context.Background(), url, "")

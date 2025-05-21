@@ -30,7 +30,7 @@ func (l loggerRT) RoundTrip(r *http.Request) (*http.Response, error) {
 		slog.String("url", r.URL.String()),
 		slog.Int("status", code),
 		slog.Duration("elapsed", time.Since(start)),
-		slog.Any("err", err),
+		slog.Any("error", err),
 	)
 
 	return resp, err
