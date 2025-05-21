@@ -8,6 +8,9 @@ import (
 	"log/slog"
 	"net/http"
 	"os"
+	"time"
+
+	"golang.org/x/time/rate"
 )
 
 func main() {
@@ -43,9 +46,15 @@ func main() {
 	header := http.Header{
 		"User-Agent": {"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"},
 	}
+
+	limits := map[string]*rate.Limiter{
+		"meo.comick.pictures": rate.NewLimiter(rate.Every(time.Second/5), 1),
+	}
+
 	client := cc.New(
 		cc.WithHeaders(header),
 		cc.WithLogger(logger),
+		cc.WithRateLimits(limits),
 	)
 
 	client.Download(context.Background(), url, "")
